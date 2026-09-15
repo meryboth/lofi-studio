@@ -1,0 +1,42 @@
+{
+  "suffix": "instrumental, no vocals, lo-fi, soft mix, gentle dynamics, warm tape saturation, subtle vinyl crackle, music for focus",
+  "tracks": [
+    {
+      "id": "smoke/blue-hours-30s",
+      "record": "blue-hours",
+      "title": "Prueba de humo",
+      "tags": "lo-fi jazz hop, felt piano chords, muted trumpet, upright bass, brushed swing drums, soft rain, late night city",
+      "bpm": 72, "keyscale": "Bb major", "duration": 30, "seeds": [31], "chosen": null
+    },
+    {
+      "id": "solar/luz-de-enero", "record": "solar", "title": "Luz de enero",
+      "tags": "lo-fi psychedelic, warm fuzzed electric guitar with tape wobble, lazy dusty drums, round bass, hazy summer afternoon, 70s",
+      "bpm": 78, "keyscale": "E minor", "duration": 150, "seeds": [11, 12, 13], "chosen": null
+    },
+    {
+      "id": "blue-hours/a-quiet-corner", "record": "blue-hours", "title": "A Quiet Corner",
+      "tags": "lo-fi jazz hop, felt piano chords, muted trumpet, upright bass, brushed swing drums, soft rain, late night city",
+      "bpm": 72, "keyscale": "Bb major", "duration": 150, "seeds": [21, 22, 23], "chosen": null
+    },
+    {
+      "id": "after-dark/orbita", "record": "after-dark", "title": "Órbita",
+      "tags": "nocturnal ambient, analog synth pads, slow arpeggio, distant radio signals, soft sub bass, barely any percussion, wide reverb",
+      "bpm": 60, "keyscale": "D minor", "duration": 150, "seeds": [31, 32, 33], "chosen": null
+    },
+    {
+      "id": "jardin/puertas-abiertas", "record": "jardin", "title": "Puertas abiertas",
+      "tags": "lo-fi bossa nova, nylon guitar, wooden percussion and shaker, rhodes, warm round bass, sunny and relaxed",
+      "bpm": 84, "keyscale": "G major", "duration": 150, "seeds": [41, 42, 43], "chosen": null
+    },
+    {
+      "id": "soft-signal/first-contact", "record": "soft-signal", "title": "First Contact",
+      "tags": "lo-fi ambient electronica, soft granular textures, glassy gentle melody, muted kick, warm pads, intimate",
+      "bpm": 70, "keyscale": "F major", "duration": 150, "seeds": [51, 52, 53], "chosen": null
+    },
+    {
+      "id": "frecuencia/senal-uno", "record": "frecuencia", "title": "Señal uno",
+      "tags": "lo-fi electronic, analog drum machine, repetitive synth bassline, arpeggiated synth, hypnotic steady pulse",
+      "bpm": 84, "keyscale": "A minor", "duration": 150, "seeds": [61, 62, 63], "chosen": null
+    }
+  ]
+}
