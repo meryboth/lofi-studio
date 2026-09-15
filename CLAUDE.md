@@ -118,4 +118,4 @@ No borrar esto sin confirmar con la usuaria: puede ser trabajo a medio camino qu
 ## Notas de entorno
 
 - El repo está dentro de OneDrive (Windows); la sincronización puede bloquear `node_modules`/`.next` durante builds.
-- Git inicializado en `master` sin commits todavía.
+- Repo en GitHub: https://github.com/meryboth/lofi-studio (rama `main`). Pensado para deploy en Vercel sin variables de entorno.
