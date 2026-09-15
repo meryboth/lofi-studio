@@ -23,11 +23,11 @@ export function addWorkspace(scene: THREE.Scene, materials: THREE.Material[], te
   const juteTex=paint(256,256,c=>{c.fillStyle="#9a8866";c.fillRect(0,0,256,256);for(let y=0;y<256;y+=4)for(let x=0;x<256;x+=4){c.fillStyle=(x+y)%8?"#ffffff10":"#00000018";c.fillRect(x,y,3,3);}});
   juteTex.wrapS=juteTex.wrapT=THREE.RepeatWrapping;juteTex.repeat.set(4,5);
   const jute=new THREE.MeshStandardMaterial({map:juteTex,roughness:1,bumpMap:juteTex,bumpScale:.01});materials.push(jute);
-  const rug=new THREE.Mesh(new THREE.BoxGeometry(2,.012,2.6),jute);rug.position.set(-4.8,.012,9);rug.receiveShadow=true;scene.add(rug);
+  const rug=new THREE.Mesh(new THREE.BoxGeometry(2,.012,2.6),jute);rug.position.set(-4.8,.012,9.8);rug.receiveShadow=true;scene.add(rug);
 
   // ── DJ table on the pier wall. Local +z faces the room; top surface at y .8425.
   const TOP=.8425;
-  const dj=group(-5.18,9,Math.PI/2,scene,S);
+  const dj=group(-5.18,9.8,Math.PI/2,scene,S);
   box(1.2,.045,.76,0,.82,0,walnut,dj);
   for(const x of [-.54,.54])for(const z of [-.31,.31])cyl(.026,.016,.8,x,.4,z,walnut,dj,12);
   const vinyl=mat("#141412",.3,.2),plinth=mat("#3a3a37",.4,.4);

@@ -2,6 +2,8 @@
 
 Un estudio para trabajar con música de fondo. Entrás a un loft en Brooklyn, elegís un vinilo de la consola y, mientras suena, afuera cae nieve y una aurora se mueve al ritmo de la música. La idea es simple: tener una compañía visual y sonora tranquila, que acompañe horas de concentración sin pedir atención.
 
+![El estudio al entrar: la consola con los seis vinilos frente al ventanal y la ciudad al atardecer](docs/screenshots/estudio.jpg)
+
 ## Para qué sirve
 
 - **Poner música sin pensar.** Seis discos, seis climas. Un clic y suena; anterior y siguiente cambian de disco.
@@ -16,6 +18,22 @@ Un estudio para trabajar con música de fondo. Entrás a un loft en Brooklyn, el
 3. Usá el reproductor de abajo: pausa, disco anterior o siguiente, volumen.
 
 Atajos: `Espacio` pausa o reanuda · `←` `→` cambian de disco · `M` silencia.
+
+## Capturas
+
+Cada disco cambia el clima: los colores y la energía de la aurora siguen a la música que suena.
+
+| Blue Hours · jazz en Sonic Universe | Frecuencia · hip hop instrumental en Fluid |
+|---|---|
+| ![Escuchando Blue Hours: aurora turquesa y violeta sobre la ciudad de noche](docs/screenshots/escucha-blue-hours.jpg) | ![Escuchando Frecuencia: aurora fucsia y rosa sobre la ciudad de noche](docs/screenshots/escucha-frecuencia.jpg) |
+
+<p align="center">
+  <img src="docs/screenshots/movil.jpg" alt="Lo Fi Studio en el celular, escuchando After Dark en vivo" width="280">
+</p>
+
+El reproductor muestra el disco, el canal en vivo y el tema que está sonando:
+
+![Reproductor con estado en vivo, tema actual, controles, visualizador y volumen](docs/screenshots/reproductor.jpg)
 
 ## Los discos
 

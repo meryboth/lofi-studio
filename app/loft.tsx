@@ -13,6 +13,7 @@ import { addGallery } from "./gallery";
 import { addSnow } from "./snow";
 import { idleMood, moods } from "./moods";
 import Place from "./place";
+import { MousePointerClick } from "lucide-react";
 
 export type LoftApi = { select: (index: number) => void };
 type AudioFrame = { bass: number; high: number; beat: number; playing: boolean; record: number };
@@ -237,7 +238,8 @@ export default function Loft({ onPrepare, onPlay, onPhase, getAudio, api }: Prop
   return <div className={`loft-entry ${phase}`}>
     <div className="loft-canvas" ref={host}/>
     <Place/>
-    <div className="loft-bottom"><span>{phase==="loading"?"Abriendo el estudio…":phase==="placing"?"Preparando tu escucha":phase==="listening"?"":""}</span><span className="loft-status"><i/> {phase==="placing"?"ON THE TURNTABLE":phase==="listening"?"":"SIDE A — SLOW LIVING"}</span></div>
+    {phase==="ready"&&<div className="loft-hint" role="status"><kbd>TIP</kbd><MousePointerClick size={17} className="loft-hint-icon" aria-hidden="true"/><span className="hint-pointer">Pick a record from the shelf to start the music</span><span className="hint-touch">Tap a record on the shelf to start the music</span></div>}
+    <div className="loft-bottom"><span>{phase==="loading"?"Abriendo el estudio…":""}</span></div>
     <div className={fallback?"loft-fallback":"loft-keyboard"} aria-label="Vinilos disponibles">{records.map((r,i)=><button key={r.id} disabled={phase==="placing"} onClick={()=>{if(fallback){callbacks.current.onPrepare(i);callbacks.current.onPlay(i);}else choose.current(i);}}>{r.title}</button>)}</div>
   </div>;
 }

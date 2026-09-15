@@ -44,8 +44,8 @@ app/lounge.ts     Living: Chesterfield, alfombra persa procedural (texturas en c
                   (marco de dos varillas curvadas en X + eslinga de cuero con pliegues y bolsillos),
                   lámpara de arco y libros. Todo se re-parenta al grupo `living` (z −2.4)
 app/architecture.ts  Detalles arquitectónicos extra (acero, óxido, lino, texturas de ruido)
-app/gallery.ts    Cuadros enmarcados con arte original dibujado en canvas: muro salón de 6 piezas sobre la consola DJ
-                  (pared del pilar, x −5.8) y 2 piezas grandes arriba en la pared del fondo (z −4.6)
+app/gallery.ts    Cuadros enmarcados con arte original dibujado en canvas: par de cuadros iguales y alineados sobre la
+                  consola DJ (pared del pilar, x −5.8) y 2 piezas grandes arriba en la pared del fondo (z −4.6)
 app/workspace.ts  Rincón habitado junto al pilar de ladrillo: mesa de nogal con consola DJ y un atril.
                   Props a escala real × S=1.4 (el loft está construido ~1.4×)
 app/city.ts       Brooklyn desde un 4.º piso, a escala real en metros (M=.56 unidades/m, calle en y=−14·M):
