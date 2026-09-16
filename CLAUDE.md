@@ -78,7 +78,7 @@ app/architecture.ts  Detalles arquitectónicos extra (acero, óxido, lino, textu
 app/gallery.ts    Cuadros enmarcados, dibujados en canvas salvo los afiches "Las Malvinas son argentinas" (todo bien posta)
                   y la compu (`public/art/compu.jpg`,
                   `public/art/malvinas.jpg`, vía `print()` con encuadre cover). Par de cuadros iguales (4:5, 1.2 × 1.46) sobre la
-                  consola DJ (pared del pilar, x −5.8) y 2 piezas grandes arriba en la pared del fondo (z −4.6)
+                  consola DJ (pared del pilar, x −5.8) y una pieza grande arriba en la pared del fondo (z −4.6)
 app/workspace.ts  Rincón habitado junto al pilar de ladrillo: mesa de nogal con consola DJ y un atril.
                   Props a escala real × S=1.4 (el loft está construido ~1.4×)
 app/city.ts       Brooklyn desde un 4.º piso, a escala real en metros (M=.56 unidades/m, calle en y=−14·M):

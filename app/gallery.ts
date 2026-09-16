@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-// Framed prints: a pair above the DJ table on the brick pier (face x −5.8) and two larger pieces high on the
+// Framed prints: a pair above the DJ table on the brick pier (face x −5.8) and a larger piece high on the
 // double-height rear wall (face z −4.6). Artwork is drawn on canvas in the loft's palette, except the "Las Malvinas son
 // argentinas" (todo bien posta) and computer prints loaded from public/art.
 export function addGallery(scene: THREE.Scene, materials: THREE.Material[], textures: THREE.Texture[]) {
@@ -36,15 +36,6 @@ export function addGallery(scene: THREE.Scene, materials: THREE.Material[], text
   }
   const paper:Draw=(c,w,h)=>{c.fillStyle=C.paper;c.fillRect(0,0,w,h);};
 
-  // Woven arches, like a hand-loomed textile.
-  const arches:Draw=(c,w,h)=>{
-    c.fillStyle=C.terracotta;c.fillRect(0,0,w,h);
-    const colors=[C.cream,C.ochre,C.rose,C.teal],unit=w/4;
-    for(let row=0;row<3;row++)for(let k=0;k<4;k++){
-      const cx=unit*(k+.5)+(row%2?unit*.5:0),cy=h*(.36+row*.3);
-      for(let ring=0;ring<4;ring++){c.strokeStyle=colors[(ring+k+row)%4];c.lineWidth=unit*.07;c.beginPath();c.arc(cx,cy,unit*(.42-ring*.1),Math.PI,Math.PI*2);c.stroke();}
-    }
-  };
   // Layered mountains under an ochre sun.
   const ranges:Draw=(c,w,h)=>{
     c.fillStyle=C.sand;c.fillRect(0,0,w,h);
@@ -62,7 +53,6 @@ export function addGallery(scene: THREE.Scene, materials: THREE.Material[], text
   const pier=-5.775,side=Math.PI/2;
   print(piece(pier,2.75,9.045,side,1.2,1.46,frames.black,.08,paper),"/art/malvinas.jpg");
   print(piece(pier,2.75,10.555,side,1.2,1.46,frames.black,.08,paper),"/art/compu.jpg");
-  // Larger pieces high on the double-height rear wall, above the existing gallery.
-  piece(-.55,5.45,-4.577,0,1.6,1.25,frames.oak,0,arches);
+  // A larger piece high on the double-height rear wall, above the existing gallery.
   piece(2.75,5.3,-4.577,0,1.15,1.45,frames.black,.09,ranges);
 }
