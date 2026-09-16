@@ -1,0 +1,18 @@
+{
+  "style": "lo-fi anime illustration, cozy aesthetic, soft cel shading, clean confident line art, warm muted palette, full body, single dog only, centered, isolated on a plain white background, no furniture, no text",
+  "dog": "a small Jack Russell terrier, white short fur, tan and brown patches covering both ears and around the eyes, a white blaze on the forehead, folded ears, short tail, thin red collar",
+  "poses": [
+    {
+      "id": "sleep",
+      "use": "napping in the BKF chair",
+      "prompt": "sleeping curled up in a tight ball, nose tucked against its tail, eyes closed, peaceful and relaxed, seen from the side and slightly above",
+      "seeds": [11, 12, 13, 14]
+    },
+    {
+      "id": "rest",
+      "use": "lying on the Chesterfield while music plays",
+      "prompt": "lying down on its belly in a sphinx pose, awake, head up, front paws stretched forward, calm happy expression, looking slightly to the side, three-quarter view",
+      "seeds": [21, 22, 23, 24]
+    }
+  ]
+}

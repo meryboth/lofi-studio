@@ -25,7 +25,13 @@ export function addArchitecturalDetails(scene: THREE.Scene, materials: THREE.Mat
   // Large restrained gallery pieces on the opaque wall, at a credible architectural scale.
   const ink=new THREE.MeshStandardMaterial({color:"#343735",roughness:.9});
   const ochre=new THREE.MeshStandardMaterial({color:"#8b6548",roughness:.9});materials.push(ink,ochre);
-  for(let i=0;i<2;i++){
+  const loader=new THREE.TextureLoader();
+  // A printed image on a plain face: paper tone until the file in public/art loads.
+  const printed=(src:string)=>{const m=new THREE.MeshStandardMaterial({color:"#e9e2d0",roughness:.85});materials.push(m);
+    loader.load(src,tex=>{tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;textures.push(tex);m.map=tex;m.color.set("#ffffff");m.needsUpdate=true;},undefined,()=>{});return m;};
+  // The first large piece is the skate print (2:3, sized to it); the second stays an abstract composition.
+  {const x=-1.7,ih=2.37,iw=ih*735/1105;box(iw+.13,2.5,.06,x,3.05,-4.54,steel);box(iw,ih,.025,x,3.05,-4.49,printed("/art/skate.jpg"));}
+  for(let i=1;i<2;i++){
     const x=-1.7+i*2.3;box(1.85,2.5,.06,x,3.05,-4.54,steel);box(1.72,2.37,.025,x,3.05,-4.49,linen);
     const circle=new THREE.Mesh(new THREE.CircleGeometry(.55,48),i?ochre:ink);circle.position.set(x-.12,3.28,-4.47);scene.add(circle);
     box(.65,.72,.015,x+.24,2.6,-4.465,i?ink:ochre);
@@ -42,11 +48,14 @@ export function addArchitecturalDetails(scene: THREE.Scene, materials: THREE.Mat
     }
   }
   const table=box(.65,.055,.65,1.4,.56,5.65,ink);for(const x of [1.16,1.64])box(.025,.53,.48,x,.28,5.65,steel);
-  for(let i=0;i<3;i++){
-    const frame=new THREE.Group();frame.position.set(-3.1+i*.95,.77,-4.12);frame.rotation.x=-.13;frame.rotation.z=(i-1)*.035;scene.add(frame);
-    const add=(w:number,h:number,d:number,x:number,y:number,z:number,m:THREE.Material)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=true;frame.add(o);};
-    add(.83,1.48,.07,0,0,0,steel);add(.74,1.39,.02,0,0,.045,linen);
-    for(let j=0;j<6;j++)add(.5-j*.065,.085,.01,0,-.38+j*.16,.061,j%2?ink:ochre);
+  // Two prints leaning on the floor against the rear wall, sized to each artwork's proportions. The images live in
+  // public/art (credits in README); until they load the face shows plain paper.
+  for(const [i,src,w,h] of [[0,"/art/banquito-fadu.jpg",.86,1.075],[1,"/art/festival-mar-del-plata-1954.jpg",.8,1.194]] as const){
+    const frame=new THREE.Group();frame.position.set(-2.95+i*1.05,.03+(h+.09)/2,-4.12);frame.rotation.x=-.13;frame.rotation.z=(i-.5)*.05;scene.add(frame);
+    const border=new THREE.Mesh(new THREE.BoxGeometry(w+.09,h+.09,.07),steel);border.castShadow=true;border.receiveShadow=true;frame.add(border);
+    const art=new THREE.MeshStandardMaterial({color:"#e9e2d0",roughness:.85});materials.push(art);
+    const face=new THREE.Mesh(new THREE.PlaneGeometry(w,h),art);face.position.z=.036;face.receiveShadow=true;frame.add(face);
+    loader.load(src,tex=>{tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=8;textures.push(tex);art.map=tex;art.color.set("#ffffff");art.needsUpdate=true;},undefined,()=>{});
   }
   for(let stack=0;stack<3;stack++)for(let i=0;i<5;i++){
     const x=-4+stack*.46,z=-3.65+stack*.24,y=.06+i*.085;

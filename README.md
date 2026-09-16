@@ -17,7 +17,7 @@ Un estudio para trabajar con música de fondo. Entrás a un loft en Brooklyn, el
 2. Elegí una portada de la consola. El disco viaja al tocadiscos y, cuando baja el brazo, empieza a sonar.
 3. Usá el reproductor de abajo: pausa, disco anterior o siguiente, volumen.
 
-Atajos: `Espacio` pausa o reanuda · `←` `→` cambian de disco · `M` silencia.
+Atajos: `Espacio` pausa o reanuda · `←` `→` cambian de disco · `M` silencia · `F` pantalla completa (también con el botón de arriba a la izquierda).
 
 ## Capturas
 
@@ -67,14 +67,28 @@ Abrir http://127.0.0.1:3000. `npm run build` compila para producción y `npm run
 
 ## Cómo está hecho
 
-Next.js y React con una escena 3D en Three.js construida por código: no hay modelos ni videos de fondo. La ciudad, la nieve, la aurora y los cuadros de las paredes se generan en tiempo real; el audio pasa por la Web Audio API para que la escena pueda escucharlo. Funciona en celular, tablet y escritorio, se puede usar con teclado y respeta la preferencia de reducir movimiento.
+Next.js y React con una escena 3D en Three.js construida por código: no hay modelos ni videos de fondo. La ciudad, la nieve, la aurora y parte de los cuadros se generan en tiempo real; el audio pasa por la Web Audio API para que la escena pueda escucharlo. Funciona en celular, tablet y escritorio, se puede usar con teclado y respeta la preferencia de reducir movimiento.
 
 - `app/loft.tsx` — escena, cámara, luces y animación del disco
 - `app/city.ts`, `app/snow.ts`, `app/aurora.ts` — el exterior
 - `app/lounge.ts`, `app/workspace.ts`, `app/gallery.ts`, `app/architecture.ts` — el interior
+- `app/dog.ts` — el perro del living
 - `app/solar.tsx`, `app/dock.tsx` — audio y reproductor
 - `app/place.tsx` — ciudad, clima y hora
 - `app/moods.ts` — el clima visual de cada disco
 - `app/records.ts` — discos y canales
 
 Las portadas son arte original generado con IA (prompt en `IMAGE-PROMPT.md`). `MUSIC-PIPELINE.md` describe una alternativa en pausa para generar música original con ComfyUI.
+
+## Créditos
+
+- **Radio:** [SomaFM](https://somafm.com), canales en vivo sostenidos por sus oyentes.
+- **Clima y ubicación** (solo si lo activás): [Open-Meteo](https://open-meteo.com) y [BigDataCloud](https://www.bigdatacloud.com).
+- **El perro:** ilustraciones generadas con IA en ComfyUI local con el modelo [Anima](https://huggingface.co/circlestone-labs) y animadas en la escena. El proceso está en `scripts/art/` y `art/`.
+- **Cuadros de terceros** (`public/art/`), usados como homenaje; sus derechos son de sus autores:
+  - *Banquito FADU*: lámina de @fedeetorres.
+  - *Festival Internacional de Cine de Mar del Plata, 1954*: afiche histórico del festival.
+  - *Las Malvinas son argentinas*: afiche de Todo Bien Posta.
+  - *Skate* y *Compu*: ilustraciones de autoría a confirmar.
+
+  Si sos autor/a de alguna y querés que se cambie el crédito o se retire, abrí un issue.

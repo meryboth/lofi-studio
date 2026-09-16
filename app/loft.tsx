@@ -10,12 +10,21 @@ import { addArchitecturalDetails } from "./architecture";
 import { addWorkspace } from "./workspace";
 import { addCity } from "./city";
 import { addGallery } from "./gallery";
+import { addDog, type DogSprites } from "./dog";
 import { addSnow } from "./snow";
 import { idleMood, moods } from "./moods";
 import Place from "./place";
 import { MousePointerClick } from "lucide-react";
 
 export type LoftApi = { select: (index: number) => void };
+
+// 2D dog drawings (generated with scripts/art); a missing variant is simply skipped.
+const sprite = (name: string) => `/sprites/dog-${name}.png`;
+const DOG_SPRITES: DogSprites = {
+  sleep: { base: sprite("sleep"), frames: { peek: sprite("sleep-peek") } },
+  rest: { base: sprite("rest"), frames: { blink: sprite("rest-blink"), ear: sprite("rest-ear")} },
+  walk: [sprite("walk"), sprite("walk-2")],
+};
 type AudioFrame = { bass: number; high: number; beat: number; playing: boolean; record: number };
 type Props = { getAudio: () => AudioFrame; onPrepare: (index: number) => void; onPlay: (index: number) => void; onPhase?: (phase: string) => void; api?: { current: LoftApi | null } };
 
@@ -146,7 +155,9 @@ export default function Loft({ onPrepare, onPlay, onPhase, getAudio, api }: Prop
     // Plants: stem segments and broad curved silhouettes with varied orientations.
     function plant(x:number,z:number,scale:number){const pot=cylinder(.25*scale,.44*scale,x,.22*scale,z,mat("#9a573d"));for(let n=0;n<10;n++){const theta=n*2.4;const y=.5*scale+n*.105*scale;const leaf=new THREE.Mesh(new THREE.SphereGeometry(1,16,10),mat(n%2?"#354c31":"#536746"));leaf.scale.set(.14*scale,.36*scale,.025*scale);leaf.position.set(x+Math.sin(theta)*.3*scale,y+.15*scale,z+Math.cos(theta)*.3*scale);leaf.rotation.set(.5,theta,Math.sin(theta)*.7);leaf.castShadow=true;scene.add(leaf);const stem=box(.018,y,.018,x,y/2,z,mat("#475539"));}return pot;}
     plant(-4.25,6.55,1.65);plant(-3.8,-3.5,1.5);plant(.6,-3.7,1.1);plant(5.05,.65,.45);
-    addLounge(scene,materials,textures);
+    const lounge=addLounge(scene,materials,textures);
+    // The dog naps in the farther BKF (clear of the player bar, whole in the entry view) and moves to the sofa with the music.
+    const dog=addDog(scene,materials,textures,{chair:lounge.chairs[0],sofa:lounge.sofa},DOG_SPRITES);
     addArchitecturalDetails(scene,materials,textures);
     addWorkspace(scene,materials,textures);
     addGallery(scene,materials,textures);
@@ -225,6 +236,7 @@ export default function Loft({ onPrepare, onPlay, onPhase, getAudio, api }: Prop
       auroraGreen.intensity=auroraLevel*(17+lowEnergy*15+beatLevel*14);auroraPink.intensity=auroraLevel*(12+highEnergy*18+beatLevel*8);auroraBlue.intensity=auroraLevel*(10+beatLevel*6);
       lightPatch.opacity=.18*(1-auroraLevel);
       fog.color.lerpColors(dayFog,nightFog,auroraLevel);fog.far=2800+auroraLevel*1400;city.update(reduce?0:now/1000,auroraLevel);
+      dog.update(now/1000,dt,audio,reduce);
       snow.update(reduce?0:now/1000,{density:mood.snow*(.55+.45*auroraLevel),wind:mood.wind,night:auroraLevel,tint:moodA,pixelScale:renderer.domElement.height*.5*camera.projectionMatrix.elements[5]});
       const wideView=done?ease(((now-selectedAt)/1000-4.4)/3.5):0;
       camera.fov=51+wideView*19*(1-pauseBlend);camera.updateProjectionMatrix();

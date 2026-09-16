@@ -1,0 +1,11 @@
+{
+  "note": "Animation frames: masked img2img (inpainting) over the chosen sprites (art/raw/dog/<base>.png). Only the ellipse `mask` [cx, cy, rx, ry] in 1024 px is repainted, so the rest of the dog stays pixel-identical and frames can be swapped without flicker. Keep masks tight (eyes, one ear): repainting the whole head changes the dog's face and age between frames. Frames without a mask are repainted whole.",
+  "frames": [
+    { "id": "rest-blink", "base": "rest-24", "mask": [291, 376, 92, 44], "denoise": 1, "seeds": [83, 84, 85, 86], "prompt": "lying down on its belly, both eyes closed, closed eyelids drawn as curved lines, sleepy and calm" },
+    { "id": "rest-ear", "base": "rest-24", "mask": [440, 250, 75, 125], "denoise": 0.85, "seeds": [75, 76, 77, 78], "prompt": "lying down on its belly, its left ear perked straight up, alert" },
+    { "id": "sleep-peek", "base": "sleep-11", "mask": [400, 585, 62, 36], "denoise": 0.75, "seeds": [79, 80, 81, 82], "prompt": "curled up in a ball, one eye half open, peeking sleepily" },
+    { "id": "walk-neck", "base": "walk-48-head", "mask": [445, 440, 75, 85], "denoise": 0.7, "seeds": [94, 95, 96], "prompt": "standing and trotting to the left, full side view, smooth white neck and shoulder, one thin red collar" },
+    { "id": "walk-step", "base": "frames/walk-neck-94", "mask": [480, 760, 440, 170], "denoise": 0.85, "seeds": [63, 64, 65], "prompt": "standing and trotting to the left, full side view, legs in the opposite stride, front left leg forward and hind right leg back, happy" },
+    { "id": "walk", "base": "rest-24", "denoise": 0.9, "seeds": [45, 46, 47, 48], "prompt": "standing and trotting to the left, full side view, all four legs visible, tail up, happy" }
+  ]
+}

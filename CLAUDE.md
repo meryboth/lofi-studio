@@ -33,6 +33,9 @@ app/solar.tsx     Orquestador: audio (pausa/reanudar, volumen persistido, detecc
                   (Espacio, ←/→, M), Media Session, shader 2D ambiental; monta <Loft/> y <Dock/>
 app/dock.tsx      Reproductor "liquid glass": portada, transporte con anillo de progreso, visualizador, volumen.
                   Niveles y progreso se escriben a estilos desde su propio rAF (sin re-render por frame)
+app/fullscreen.tsx  Botón de pantalla completa (arriba a la izquierda) + tecla F; soporta el API con prefijo webkit y se
+                  oculta si el navegador no permite fullscreen (iPhone). En el Browser pane de Claude el pedido queda
+                  pendiente sin resolverse; en Chrome real funciona (verificado con puppeteer)
 app/place.tsx     Cartel de ciudad/clima/hora. Sin permiso: ciudad por zona horaria. Al tocarlo pide geolocalización,
                   redondea a ~1 km y consulta Open-Meteo + BigDataCloud; cachea 30 min en localStorage
 app/moods.ts      Carácter visual por disco: colores de aurora, velocidad, amplitud, ganancias, nieve y viento
@@ -43,8 +46,38 @@ app/aurora.ts     ShaderMaterial del cielo (esfera BackSide r=28) — uniforms t
 app/lounge.ts     Living: Chesterfield, alfombra persa procedural (texturas en canvas), dos sillas BKF
                   (marco de dos varillas curvadas en X + eslinga de cuero con pliegues y bolsillos),
                   lámpara de arco y libros. Todo se re-parenta al grupo `living` (z −2.4)
-app/architecture.ts  Detalles arquitectónicos extra (acero, óxido, lino, texturas de ruido)
-app/gallery.ts    Cuadros enmarcados con arte original dibujado en canvas: par de cuadros iguales y alineados sobre la
+app/dog.ts        Jack Russell de primitivas (×1.25), grupo propio en la escena. `addLounge` devuelve `{ sofa, chairs }`
+                  y `addDog(scene, materials, { chair: chairs[0], sofa })` calcula en mundo dos lugares: atravesado en la
+                  BKF lejana (patas delanteras recogidas para no atravesar la tela) y de tres cuartos en el almohadón
+                  del medio. 3.8 s después de que arranca la música hace el viaje salto → trote → salto al sillón; tras
+                  6 s sin música vuelve a la silla y a los 14 s se duerme ahí. Siempre respira y parpadea; cada 10–25 s
+                  una acción al azar; con música mueve la cola y cabecea con `beat`. Reduced-motion: cambia de lugar sin
+                  animar y solo respira.
+                  Modo 2D (el que usa loft.tsx, config `DOG_SPRITES`): con `sprites` oculta el cuerpo 3D (que sigue
+                  corriendo invisible para los tiempos y el viaje) y muestra ilustraciones de `public/sprites/dog-*.png`.
+                  Cada lugar es una "hoja": dibujo base + variantes inpintadas del mismo dibujo, todas con un único
+                  recorte al alfa para poder alternarlas sin saltos. Sillón: parpadeo cada 2.5–6.5 s y cada 8–18 s un
+                  clip (movimiento de oreja o ojos cerrados un rato; el clip `wag` se activa solo si existen `tail`/`tail2`, hoy no:
+                  las colas inpintadas salieron dobles o deformes).
+                  Silla: espiar con un ojo. El viaje usa el dibujo de caminata (dos pasos alternados, rebote) que sigue
+                  al rig y se espeja según la dirección en pantalla (derecha de la cámara del último render).
+                  Variantes que no cargan se omiten. Tinte nocturno al sonar música (los Sprites no reciben luz)
+art/              Ilustraciones con ComfyUI local (Anima + LoRA turbo + RMBG). Poses base: `art/dog-poses.json` →
+                  `node scripts/art/generate-dog.mjs [--only <pose>]`. Cuadros de animación: `art/dog-frames.json`
+                  (máscara elíptica [cx,cy,rx,ry] en px de 1024 → solo esa zona se repinta) →
+                  `node scripts/art/generate-dog-frames.mjs [--only <id>]` (necesita ffmpeg). Todo sale a
+                  `art/raw/dog/` (ignorado por git); los elegidos se copian a 512 px a `public/sprites/dog-<nombre>.png`.
+                  Máscaras chicas (ojos, una oreja): repintar la cabeza entera le cambia la cara/edad al perro entre cuadros.
+                  La caminata usa `walk-48-head.png`: el cuerpo de walk-48 con la cabeza de rest-24 pegada (×1.12, nariz
+                  alineada, hecho con ffmpeg) y el cuello repintado (walk-neck). Elegidos hoy: sleep-11, rest-24,
+                  rest-blink-86, rest-ear-75, sleep-peek-80,
+                  walk-neck-94 (walk), walk-step-63 (walk-2)
+app/architecture.ts  Detalles arquitectónicos extra (acero, óxido, lino, texturas de ruido). Imágenes de `public/art`:
+                  el póster grande izquierdo de la pared del fondo (`skate.jpg`, marco a 2:3) y los dos cuadros apoyados
+                  en el piso (`banquito-fadu.jpg`, `festival-mar-del-plata-1954.jpg`)
+app/gallery.ts    Cuadros enmarcados, dibujados en canvas salvo los afiches "Las Malvinas son argentinas" (todo bien posta)
+                  y la compu (`public/art/compu.jpg`,
+                  `public/art/malvinas.jpg`, vía `print()` con encuadre cover). Par de cuadros iguales (4:5, 1.2 × 1.46) sobre la
                   consola DJ (pared del pilar, x −5.8) y 2 piezas grandes arriba en la pared del fondo (z −4.6)
 app/workspace.ts  Rincón habitado junto al pilar de ladrillo: mesa de nogal con consola DJ y un atril.
                   Props a escala real × S=1.4 (el loft está construido ~1.4×)

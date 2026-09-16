@@ -16,10 +16,24 @@ export function addLounge(scene: THREE.Scene, materials: THREE.Material[], textu
   for(let i=0;i<3;i++){rounded(.85,.23,.84,(i-1)*.89,.66,.04);rounded(.86,.014,.85,(i-1)*.89,.635,.04,seam,.005);}
   for(const x of [-1.43,1.43]){rounded(.34,.67,1.15,x,.69,0);const roll=new THREE.Mesh(new THREE.CylinderGeometry(.2,.2,1.17,40),leather);roll.rotation.x=Math.PI/2;roll.position.set(x,1.02,0);roll.castShadow=true;sofa.add(roll);for(let n=0;n<11;n++){const pin=new THREE.Mesh(new THREE.SphereGeometry(.015,8,6),brass);const a=n*Math.PI/10;pin.position.set(x+Math.cos(a)*.15,1.02+Math.sin(a)*.15,.597);sofa.add(pin);}}
   // Sculpted diamond tufting: continuous leather with recessed buttons, not separate blocks.
-  const tuft=new THREE.PlaneGeometry(2.65,.68,132,40);const pos=tuft.attributes.position;
-  for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i);const row=Math.max(0,Math.min(2,Math.round((y+.2)/.18))),cx=(x+1.325)/.33-(row%2)*.5;const dx=(cx-Math.round(cx))*.33,dy=y+.2-row*.18;const dent=Math.exp(-(dx*dx+dy*dy)/.0025);pos.setZ(i,.035-.075*dent);}
-  tuft.computeVertexNormals();const back=new THREE.Mesh(tuft,leather);back.position.set(0,1.02,-.333);back.castShadow=true;sofa.add(back);
-  for(let row=0;row<3;row++)for(let col=0;col<8;col++){const b=new THREE.Mesh(new THREE.SphereGeometry(.023,10,8),seam);b.scale.z=.4;b.position.set(-1.25+col*.33+(row%2)*.165,.82+row*.18,-.365);sofa.add(b);}
+  // Classic Chesterfield diamond tufting: 3 staggered rows of buttons TUFT apart, joined by shallow diagonal creases,
+  // held in the upper back (clear of the seat) and below the rounded top edge so it never peeks over it from behind.
+  const TUFT=.38,ROW=.12,CREASE=.07;
+  const tuft=new THREE.PlaneGeometry(2.65,.42,400,70);const pos=tuft.attributes.position;
+  // Dents fade out near the panel edges so its outline stays straight (a jagged edge casts saw-tooth shadows).
+  // Creases run along the lattice diagonals: in (u,v) coordinates every button sits on even integers.
+  for(let i=0;i<pos.count;i++){
+    const x=pos.getX(i),y=pos.getY(i);const row=Math.max(0,Math.min(2,Math.round((y+.12)/ROW))),cx=(x+1.325)/TUFT-(row%2)*.5;
+    const dx=(cx-Math.round(cx))*TUFT,dy=y+.12-row*ROW;
+    const edge=THREE.MathUtils.smoothstep(.21-Math.abs(y),0,.06)*THREE.MathUtils.smoothstep(1.325-Math.abs(x),0,.1);
+    const dent=Math.exp(-(dx*dx+dy*dy)/.0022);
+    const u=(x+1.325)/(TUFT/2)+(y+.12)/ROW,v=(x+1.325)/(TUFT/2)-(y+.12)/ROW;
+    const crease=Math.max(Math.exp(-Math.pow((u-2*Math.round(u/2))/CREASE,2)),Math.exp(-Math.pow((v-2*Math.round(v/2))/CREASE,2)))*THREE.MathUtils.smoothstep(.19-Math.abs(y),0,.05);
+    pos.setZ(i,.035-(.025*dent+.006*crease)*edge);
+  }
+  tuft.computeVertexNormals();const back=new THREE.Mesh(tuft,leather);back.position.set(0,1.07,-.333);back.castShadow=false;sofa.add(back);
+  const button=new THREE.SphereGeometry(.018,12,8);
+  for(let row=0;row<3;row++)for(let k=1;k<7;k++){const x=-1.325+(k+(row%2)*.5)*TUFT;if(Math.abs(x)>1.2)continue;const b=new THREE.Mesh(button,seam);b.scale.z=.4;b.position.set(x,.95+row*ROW,-.345);sofa.add(b);}
   for(const x of [-1.22,1.22])for(const z of [-.36,.36])rounded(.11,.22,.11,x,.14,z,seam,.025);
   // Woven Persian-inspired rug: burgundy ground, multiple borders and repeated floral medallions.
   const canvas=document.createElement("canvas");canvas.width=1024;canvas.height=768;const c=canvas.getContext("2d")!;
@@ -58,10 +72,11 @@ export function addLounge(scene: THREE.Scene, materials: THREE.Material[], textu
   }
   const W=48,H=48;
   // Rounded leather cap that swallows each rod tip; shared by all eight pockets.
-  const pocketShape=new THREE.LatheGeometry([[.047,-.075],[.043,-.02],[.034,.03],[.024,.058],[.012,.073],[0,.077]].map(([r,y])=>new THREE.Vector2(r,y)),18);
+  const pocketShape=new THREE.LatheGeometry([[.028,-.035],[.026,-.01],[.021,.018],[.016,.034],[.008,.043],[0,.046]].map(([r,y])=>new THREE.Vector2(r,y)),18);
+  const chairs:THREE.Group[]=[];
   for(const [x,turn] of [[-1.75,.22],[.15,-.22]]){
     // Lifted onto the rug's top face (y .0475) so the floor bars are not buried in the pile.
-    const chair=new THREE.Group();chair.position.set(x,.048,2.45);chair.rotation.y=turn;scene.add(chair);
+    const chair=new THREE.Group();chair.position.set(x,.048,2.45);chair.rotation.y=turn;scene.add(chair);chairs.push(chair);
     const sling=new THREE.PlaneGeometry(2,1,W,H),vertices=sling.attributes.position;
     for(let i=0;i<vertices.count;i++){const p=slingPoint(vertices.getX(i),vertices.getY(i)+.5);vertices.setXYZ(i,p.x,p.y,p.z);}
     sling.computeVertexNormals();
@@ -81,12 +96,12 @@ export function addLounge(scene: THREE.Scene, materials: THREE.Material[], textu
     for(const sx of [-1,1]){
       for(const [ear,foot] of [[frontEar,rearFoot],[rearEar,frontFoot]]){
         const top=mirror(ear,sx),dir=top.clone().sub(mirror(foot,sx)).normalize();
-        const pocket=new THREE.Mesh(pocketShape,bkfHem);pocket.position.copy(top).addScaledVector(dir,.045);pocket.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir);pocket.castShadow=true;chair.add(pocket);
+        const pocket=new THREE.Mesh(pocketShape,bkfHem);pocket.position.copy(top).addScaledVector(dir,.025);pocket.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir);pocket.castShadow=true;chair.add(pocket);
       }
     }
     // Each rod: ear → diagonal leg to the opposite foot → arched floor bar → leg → ear. Side views cross in an X.
     for(const [ear,foot,z] of [[rearEar,frontFoot,.45],[frontEar,rearFoot,-.45]] as const){
-      const tip=(sx:number)=>mirror(ear,sx).addScaledVector(mirror(ear,sx).sub(mirror(foot,sx)).normalize(),.08);
+      const tip=(sx:number)=>mirror(ear,sx).addScaledVector(mirror(ear,sx).sub(mirror(foot,sx)).normalize(),.05);
       tube(bentRod([tip(-1),mirror(foot,-1),new THREE.Vector3(-.32,.02,z),new THREE.Vector3(0,.12,z),new THREE.Vector3(.32,.02,z),foot,tip(1)],.06),220,.014,bkfSteel);
     }
   }
@@ -108,5 +123,5 @@ export function addLounge(scene: THREE.Scene, materials: THREE.Material[], textu
   }
   const loungeObjects=scene.children.slice(loungeStart);
   const living=new THREE.Group();scene.add(living);loungeObjects.forEach(o=>living.add(o));living.position.z=-2.4;
-  return sofa;
+  return { sofa, chairs };
 }

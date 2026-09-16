@@ -7,6 +7,7 @@ import { records } from "./records";
 import { idleMood, moods } from "./moods";
 import Loft, { type LoftApi } from "./loft";
 import Dock, { type Song, type StreamStatus } from "./dock";
+import Fullscreen from "./fullscreen";
 // A deterministic, original 48-second ambient study, rendered locally once. Used only when the radio stream is unreachable.
 function compose(context: AudioContext, variant=0) {
   const rate = context.sampleRate, seconds = 48;
@@ -308,8 +309,9 @@ export default function Solar() {
       onToggle={() => void toggle()} onPrev={() => skip(-1)} onNext={() => skip(1)}
       onVolume={value => { setVolume(value); setMuted(false); }} onMute={() => setMuted(m => !m)}
       getLevels={() => audio.current?.playing ? spectrum.current : null}/>}
+    <Fullscreen/>
     <div className="ambient-ui loft-controls">
-      {error && <button className="ambient-error" role="alert" onClick={() => void toggle()}>Activar sonido</button>}
+      {error &&<button className="ambient-error" role="alert" onClick={() => void toggle()}>Activar sonido</button>}
     </div>
   </section>;
 }
