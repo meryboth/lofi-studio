@@ -71,7 +71,7 @@ Next.js y React con una escena 3D en Three.js construida por código: no hay mod
 
 - `app/loft.tsx` — escena, cámara, luces y animación del disco
 - `app/city.ts`, `app/snow.ts`, `app/aurora.ts` — el exterior
-- `app/lounge.ts`, `app/workspace.ts`, `app/gallery.ts`, `app/architecture.ts` — el interior
+- `app/lounge.ts`, `app/workspace.ts`, `app/gallery.ts`, `app/architecture.ts`, `app/rides.ts` — el interior
 - `app/dog.ts` — el perro del living
 - `app/solar.tsx`, `app/dock.tsx` — audio y reproductor
 - `app/place.tsx` — ciudad, clima y hora
@@ -90,5 +90,6 @@ Las portadas son arte original generado con IA (prompt en `IMAGE-PROMPT.md`). `M
   - *Festival Internacional de Cine de Mar del Plata, 1954*: afiche histórico del festival.
   - *Las Malvinas son argentinas*: afiche de Todo Bien Posta.
   - *Skate* y *Compu*: ilustraciones de autoría a confirmar.
+  - Gráfica de la tabla de skate (*Mar del Plata*): autoría a confirmar.
 
   Si sos autor/a de alguna y querés que se cambie el crédito o se retire, abrí un issue.

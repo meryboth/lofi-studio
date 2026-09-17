@@ -79,6 +79,11 @@ app/gallery.ts    Cuadros enmarcados, dibujados en canvas salvo los afiches "Las
                   y la compu (`public/art/compu.jpg`,
                   `public/art/malvinas.jpg`, vía `print()` con encuadre cover). Par de cuadros iguales (4:5, 1.2 × 1.46) sobre la
                   consola DJ (pared del pilar, x −5.8) y una pieza grande arriba en la pared del fondo (z −4.6)
+app/rides.ts      Skate (×1.9, ~1.5 de alto) apoyado en el borde de la tapa de la consola (x −3.96, y 1.26; z −1.1, inclinado
+                  11°, la punta de arriba sobresale del mueble), ruedas hacia el living; tabla de tres láminas curvadas, la de abajo con `public/art/skate-deck.webp`, cuyo alfa ya
+                  sigue el contorno) y bici single speed colgada en ganchos en la pared del fondo (x −4.15, sobre la planta, ×1.7).
+                  Las piezas metálicas usan MeshPhysicalMaterial con un envMap propio (RoomEnvironment vía PMREM, por eso
+                  recibe el renderer): la escena no tiene environment y el metal sin reflejos se ve gris plano
 app/workspace.ts  Rincón habitado junto al pilar de ladrillo: mesa de nogal con consola DJ y un atril.
                   Props a escala real × S=1.4 (el loft está construido ~1.4×)
 app/city.ts       Brooklyn desde un 4.º piso, a escala real en metros (M=.56 unidades/m, calle en y=−14·M):

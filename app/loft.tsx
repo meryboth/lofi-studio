@@ -10,6 +10,7 @@ import { addArchitecturalDetails } from "./architecture";
 import { addWorkspace } from "./workspace";
 import { addCity } from "./city";
 import { addGallery } from "./gallery";
+import { addRides } from "./rides";
 import { addDog, type DogSprites } from "./dog";
 import { addSnow } from "./snow";
 import { idleMood, moods } from "./moods";
@@ -161,6 +162,7 @@ export default function Loft({ onPrepare, onPlay, onPhase, getAudio, api }: Prop
     addArchitecturalDetails(scene,materials,textures);
     addWorkspace(scene,materials,textures);
     addGallery(scene,materials,textures);
+    addRides(scene,materials,textures,renderer);
     const city=addCity(scene,materials);
     const snow=addSnow(scene,materials);
     // Mood state eases toward the playing record's palette and dynamics (moods.ts) so record changes cross-fade.
